@@ -206,8 +206,8 @@ static void zend_persist_op_array_calc_ex(zend_op_array *op_array)
 		}
     }
 
-	if (op_array->filename) {
-		ADD_STRING(op_array->filename);
+	if (op_array->info->filename) {
+		ADD_STRING(op_array->info->filename);
 	}
 
 	if (op_array->arg_info) {
@@ -238,8 +238,8 @@ static void zend_persist_op_array_calc_ex(zend_op_array *op_array)
 		ADD_DUP_SIZE(op_array->brk_cont_array, sizeof(zend_brk_cont_element) * op_array->last_brk_cont);
 	}
 
-	if (ZCG(accel_directives).save_comments && op_array->doc_comment) {
-		ADD_STRING(op_array->doc_comment);
+	if (ZCG(accel_directives).save_comments && op_array->info->doc_comment) {
+		ADD_STRING(op_array->info->doc_comment);
 	}
 
 	if (op_array->try_catch_array) {

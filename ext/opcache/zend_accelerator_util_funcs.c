@@ -551,13 +551,13 @@ failure:
 	function1 = Z_PTR(p->val);
 	function2 = Z_PTR_P(t);
 	CG(in_compilation) = 1;
-	zend_set_compiled_filename(function1->op_array.filename);
+	zend_set_compiled_filename(function1->op_array.info->filename);
 	CG(zend_lineno) = function1->op_array.opcodes[0].lineno;
 	if (function2->type == ZEND_USER_FUNCTION
 		&& function2->op_array.last > 0) {
 		zend_error(E_ERROR, "Cannot redeclare %s() (previously declared in %s:%d)",
 				   ZSTR_VAL(function1->common.function_name),
-				   ZSTR_VAL(function2->op_array.filename),
+				   ZSTR_VAL(function2->op_array.info->filename),
 				   (int)function2->op_array.opcodes[0].lineno);
 	} else {
 		zend_error(E_ERROR, "Cannot redeclare %s()", ZSTR_VAL(function1->common.function_name));
@@ -595,13 +595,13 @@ failure:
 	function1 = Z_PTR(p->val);
 	function2 = Z_PTR_P(t);
 	CG(in_compilation) = 1;
-	zend_set_compiled_filename(function1->op_array.filename);
+	zend_set_compiled_filename(function1->op_array.info->filename);
 	CG(zend_lineno) = function1->op_array.opcodes[0].lineno;
 	if (function2->type == ZEND_USER_FUNCTION
 		&& function2->op_array.last > 0) {
 		zend_error(E_ERROR, "Cannot redeclare %s() (previously declared in %s:%d)",
 				   ZSTR_VAL(function1->common.function_name),
-				   ZSTR_VAL(function2->op_array.filename),
+				   ZSTR_VAL(function2->op_array.info->filename),
 				   (int)function2->op_array.opcodes[0].lineno);
 	} else {
 		zend_error(E_ERROR, "Cannot redeclare %s()", ZSTR_VAL(function1->common.function_name));

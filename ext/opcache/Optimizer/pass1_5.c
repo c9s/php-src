@@ -304,7 +304,7 @@ void zend_optimizer_pass1(zend_op_array *op_array, zend_optimizer_ctx *ctx)
 								(ce->type == ZEND_INTERNAL_CLASS &&
 								 ce->info.internal.module->type != MODULE_PERSISTENT) ||
 								(ce->type == ZEND_USER_CLASS &&
-								 ZEND_CE_FILENAME(ce) != op_array->filename)) {
+								 ZEND_CE_FILENAME(ce) != op_array->info->filename)) {
 							break;
 						}
 					}

@@ -579,9 +579,9 @@ static void zend_persist_op_array_ex(zend_op_array *op_array, zend_persistent_sc
 		}
 	}
 
-	if (op_array->filename) {
+	if (op_array->info->filename) {
 		/* do not free! PHP has centralized filename storage, compiler will free it */
-		zend_accel_memdup_string(op_array->filename);
+		zend_accel_memdup_string(op_array->info->filename);
 	}
 
 	if (op_array->arg_info) {
@@ -625,19 +625,19 @@ static void zend_persist_op_array_ex(zend_op_array *op_array, zend_persistent_sc
 		op_array->scope = zend_shared_alloc_get_xlat_entry(op_array->scope);
 	}
 
-	if (op_array->doc_comment) {
+	if (op_array->info->doc_comment) {
 		if (ZCG(accel_directives).save_comments) {
 			if (already_stored) {
-				op_array->doc_comment = zend_shared_alloc_get_xlat_entry(op_array->doc_comment);
-				ZEND_ASSERT(op_array->doc_comment != NULL);
+				op_array->info->doc_comment = zend_shared_alloc_get_xlat_entry(op_array->info->doc_comment);
+				ZEND_ASSERT(op_array->info->doc_comment != NULL);
 			} else {
-				zend_accel_store_string(op_array->doc_comment);
+				zend_accel_store_string(op_array->info->doc_comment);
 			}
 		} else {
 			if (!already_stored) {
-				zend_string_release(op_array->doc_comment);
+				zend_string_release(op_array->info->doc_comment);
 			}
-			op_array->doc_comment = NULL;
+			op_array->info->doc_comment = NULL;
 		}
 	}
 
