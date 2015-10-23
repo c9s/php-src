@@ -52,6 +52,7 @@
 	} \
 } while (0)
 
+typedef struct _zend_op_array_info zend_op_array_info;
 typedef struct _zend_op_array zend_op_array;
 typedef struct _zend_op zend_op;
 
@@ -330,6 +331,14 @@ typedef struct _zend_internal_function_info {
 	zend_bool _is_variadic;
 } zend_internal_function_info;
 
+
+struct _zend_op_array_info {
+	zend_string *filename;
+	uint32_t line_start;
+	uint32_t line_end;
+	zend_string *doc_comment;
+};
+
 struct _zend_op_array {
 	/* Common elements */
 	zend_uchar type;
@@ -361,11 +370,8 @@ struct _zend_op_array {
 
 	/* static variables support */
 	HashTable *static_variables;
+	zend_op_array_info *info;
 
-	zend_string *filename;
-	uint32_t line_start;
-	uint32_t line_end;
-	zend_string *doc_comment;
 	uint32_t early_binding; /* the linked list of delayed declarations */
 
 	int last_literal;
@@ -376,6 +382,8 @@ struct _zend_op_array {
 
 	void *reserved[ZEND_MAX_RESERVED_RESOURCES];
 };
+
+
 
 
 #define ZEND_RETURN_VALUE				0
