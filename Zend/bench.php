@@ -40,6 +40,33 @@ function simpleudcall() {
 function hallo2($a) {
 }
 
+
+
+/****/
+
+function foolevel3($a)
+{
+  return $a;
+}
+
+function foolevel2($a)
+{
+  return foolevel3($a);
+}
+
+function foolevel1($a)
+{
+  return foolevel2($a);
+}
+
+function simple3levelucall()
+{
+  for ($i = 0; $i < 1000000; $i++) 
+    foolevel1("hallo");
+}
+
+
+
 /****/
 
 function mandel() {
@@ -390,6 +417,8 @@ simpleucall();
 $t = end_test($t, "simpleucall");
 simpleudcall();
 $t = end_test($t, "simpleudcall");
+simple3levelucall();
+$t = end_test($t, "simple3levelucall");
 mandel();
 $t = end_test($t, "mandel");
 mandel2();
