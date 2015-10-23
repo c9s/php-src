@@ -211,8 +211,8 @@ static int phpdbg_print_symbols(zend_bool show_globals) {
 				phpdbg_notice("variableinfo", "function=\"%s\" num=\"%d\"", "Variables in %s() (%d)", ZSTR_VAL(ops->function_name), zend_hash_num_elements(&vars));
 			}
 		} else {
-			if (ops->filename) {
-				phpdbg_notice("variableinfo", "file=\"%s\" num=\"%d\"", "Variables in %s (%d)", ZSTR_VAL(ops->filename), zend_hash_num_elements(&vars));
+			if (ops->info->filename) {
+				phpdbg_notice("variableinfo", "file=\"%s\" num=\"%d\"", "Variables in %s (%d)", ZSTR_VAL(ops->info->filename), zend_hash_num_elements(&vars));
 			} else {
 				phpdbg_notice("variableinfo", "opline=\"%p\" num=\"%d\"", "Variables @ %p (%d)", ops, zend_hash_num_elements(&vars));
 			}
@@ -309,8 +309,8 @@ PHPDBG_INFO(literal) /* {{{ */
 				phpdbg_notice("literalinfo", "function=\"%s\" num=\"%d\"", "Literal Constants in %s() (%d)", ops->function_name->val, count);
 			}
 		} else {
-			if (ops->filename) {
-				phpdbg_notice("literalinfo", "file=\"%s\" num=\"%d\"", "Literal Constants in %s (%d)", ZSTR_VAL(ops->filename), count);
+			if (ops->info->filename) {
+				phpdbg_notice("literalinfo", "file=\"%s\" num=\"%d\"", "Literal Constants in %s (%d)", ZSTR_VAL(ops->info->filename), count);
 			} else {
 				phpdbg_notice("literalinfo", "opline=\"%p\" num=\"%d\"", "Literal Constants @ %p (%d)", ops, count);
 			}
@@ -442,8 +442,8 @@ PHPDBG_INFO(funcs) /* {{{ */
 
 		phpdbg_write("function", "name=\"%s\"", "|-------- %s", op_array->function_name ? ZSTR_VAL(op_array->function_name) : "{main}");
 
-		if (op_array->filename) {
-			phpdbg_writeln("functionsource", "file=\"%s\" line=\"%d\"", " in %s on line %d", ZSTR_VAL(op_array->filename), op_array->line_start);
+		if (op_array->info->filename) {
+			phpdbg_writeln("functionsource", "file=\"%s\" line=\"%d\"", " in %s on line %d", ZSTR_VAL(op_array->info->filename), op_array->info->line_start);
 		} else {
 			phpdbg_writeln("functionsource", "", " (no source code)");
 		}

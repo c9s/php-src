@@ -188,7 +188,7 @@ void phpdbg_list_function(const zend_function *fbc) /* {{{ */
 
 	ops = (zend_op_array *) fbc;
 
-	phpdbg_list_file(ops->filename, ops->line_end - ops->line_start + 1, ops->line_start, 0);
+	phpdbg_list_file(ops->info->filename, ops->info->line_end - ops->info->line_start + 1, ops->info->line_start, 0);
 } /* }}} */
 
 void phpdbg_list_function_byname(const char *str, size_t len) /* {{{ */

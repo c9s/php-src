@@ -114,7 +114,7 @@ static zend_string *zend_build_runtime_definition_key(zend_string *name, unsigne
 	zend_string *result;
 	char char_pos_buf[32];
 	size_t char_pos_len = zend_sprintf(char_pos_buf, "%p", lex_pos);
-	zend_string *filename = CG(active_op_array)->filename;
+	zend_string *filename = CG(active_op_array)->info->filename;
 
 	/* NULL, name length, filename length, last accepting char position length */
 	result = zend_string_alloc(1 + ZSTR_LEN(name) + ZSTR_LEN(filename) + char_pos_len, 0);
@@ -960,7 +960,7 @@ ZEND_API int do_bind_function(const zend_op_array *op_array, const zend_op *opli
 			&& old_function->op_array.last > 0) {
 			zend_error_noreturn(error_level, "Cannot redeclare %s() (previously declared in %s:%d)",
 						ZSTR_VAL(function->common.function_name),
-						ZSTR_VAL(old_function->op_array.filename),
+						ZSTR_VAL(old_function->op_array.info->filename),
 						old_function->op_array.opcodes[0].lineno);
 		} else {
 			zend_error_noreturn(error_level, "Cannot redeclare %s()", ZSTR_VAL(function->common.function_name));
@@ -4836,10 +4836,10 @@ void zend_compile_func_decl(znode *result, zend_ast *ast) /* {{{ */
 
 	op_array->fn_flags |= (orig_op_array->fn_flags & ZEND_ACC_STRICT_TYPES);
 	op_array->fn_flags |= decl->flags;
-	op_array->line_start = decl->start_lineno;
-	op_array->line_end = decl->end_lineno;
+	op_array->info->line_start = decl->start_lineno;
+	op_array->info->line_end = decl->end_lineno;
 	if (decl->doc_comment) {
-		op_array->doc_comment = zend_string_copy(decl->doc_comment);
+		op_array->info->doc_comment = zend_string_copy(decl->doc_comment);
 	}
 	if (decl->kind == ZEND_AST_CLOSURE) {
 		op_array->fn_flags |= ZEND_ACC_CLOSURE;
@@ -5151,7 +5151,7 @@ static zend_string *zend_generate_anon_class_name(unsigned char *lex_pos) /* {{{
 	zend_string *result;
 	char char_pos_buf[32];
 	size_t char_pos_len = zend_sprintf(char_pos_buf, "%p", lex_pos);
-	zend_string *filename = CG(active_op_array)->filename;
+	zend_string *filename = CG(active_op_array)->info->filename;
 
 	/* NULL, name length, filename length, last accepting char position length */
 	result = zend_string_alloc(sizeof("class@anonymous") + ZSTR_LEN(filename) + char_pos_len, 0);
@@ -5491,7 +5491,7 @@ void zend_compile_use(zend_ast *ast) /* {{{ */
 				{
 					zend_function *fn = zend_hash_find_ptr(CG(function_table), lookup_name);
 					if (fn && fn->type == ZEND_USER_FUNCTION
-						&& fn->op_array.filename == CG(compiled_filename)
+						&& fn->op_array.info->filename == CG(compiled_filename)
 					) {
 						zend_check_already_in_use(type, old_name, new_name, lookup_name);
 					}

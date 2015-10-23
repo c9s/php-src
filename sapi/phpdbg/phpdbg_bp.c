@@ -520,7 +520,7 @@ PHPDBG_API void phpdbg_resolve_op_array_breaks(zend_op_array *op_array) /* {{{ *
 	}
 
 	if (op_array->function_name == NULL) {
-		if (!(oplines_table = zend_hash_find_ptr(&PHPDBG_G(bp)[PHPDBG_BREAK_FILE_OPLINE], op_array->filename))) {
+		if (!(oplines_table = zend_hash_find_ptr(&PHPDBG_G(bp)[PHPDBG_BREAK_FILE_OPLINE], op_array->info->filename))) {
 			return;
 		}
 	} else if (!op_array->function_name || !(oplines_table = zend_hash_find_ptr(func_table, op_array->function_name))) {
@@ -552,7 +552,7 @@ PHPDBG_API int phpdbg_resolve_opline_break(phpdbg_breakopline_t *new_break) /* {
 
 	if (new_break->func_name == NULL) {
 		if (EG(current_execute_data) == NULL) {
-			if (PHPDBG_G(ops) != NULL && !memcmp(PHPDBG_G(ops)->filename, new_break->class_name, new_break->class_len)) {
+			if (PHPDBG_G(ops) != NULL && !memcmp(PHPDBG_G(ops)->info->filename, new_break->class_name, new_break->class_len)) {
 				if (phpdbg_resolve_op_array_break(new_break, PHPDBG_G(ops)) == SUCCESS) {
 					return SUCCESS;
 				} else {
@@ -564,7 +564,7 @@ PHPDBG_API int phpdbg_resolve_opline_break(phpdbg_breakopline_t *new_break) /* {
 			zend_execute_data *execute_data = EG(current_execute_data);
 			do {
 				zend_op_array *op_array = &execute_data->func->op_array;
-				if (op_array->function_name == NULL && op_array->scope == NULL && new_break->class_len == ZSTR_LEN(op_array->filename) && !memcmp(ZSTR_VAL(op_array->filename), new_break->class_name, new_break->class_len)) {
+				if (op_array->function_name == NULL && op_array->scope == NULL && new_break->class_len == ZSTR_LEN(op_array->info->filename) && !memcmp(ZSTR_VAL(op_array->info->filename), new_break->class_name, new_break->class_len)) {
 					if (phpdbg_resolve_op_array_break(new_break, op_array) == SUCCESS) {
 						return SUCCESS;
 					} else {
@@ -886,7 +886,7 @@ static inline phpdbg_breakbase_t *phpdbg_find_breakpoint_file(zend_op_array *op_
 	phpdbg_breakbase_t *brake;
 	size_t path_len;
 	char realpath[MAXPATHLEN];
-	const char *path = ZSTR_VAL(op_array->filename);
+	const char *path = ZSTR_VAL(op_array->info->filename);
 
 	if (VCWD_REALPATH(path, realpath)) {
 		path = realpath;

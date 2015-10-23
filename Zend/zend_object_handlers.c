@@ -1054,9 +1054,12 @@ ZEND_API zend_function *zend_get_call_trampoline_func(zend_class_entry *ce, zend
 
 	func->prototype = fbc;
 	func->scope = fbc->common.scope;
-	func->filename = (fbc->type == ZEND_USER_FUNCTION)? fbc->op_array.filename : ZSTR_EMPTY_ALLOC();
-	func->line_start = (fbc->type == ZEND_USER_FUNCTION)? fbc->op_array.line_start : 0;
-	func->line_end = (fbc->type == ZEND_USER_FUNCTION)? fbc->op_array.line_end : 0;
+
+	func->info = (zend_op_array_info*) emalloc(sizeof(zend_op_array_info));
+
+	func->info->filename = (fbc->type == ZEND_USER_FUNCTION)? fbc->op_array.info->filename : ZSTR_EMPTY_ALLOC();
+	func->info->line_start = (fbc->type == ZEND_USER_FUNCTION)? fbc->op_array.info->line_start : 0;
+	func->info->line_end = (fbc->type == ZEND_USER_FUNCTION)? fbc->op_array.info->line_end : 0;
 
 	//??? keep compatibility for "\0" characters
 	//??? see: Zend/tests/bug46238.phpt

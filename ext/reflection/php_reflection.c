@@ -800,8 +800,8 @@ static void _function_string(string *str, zend_function *fptr, zend_class_entry 
 	 * What's "wrong" is that any whitespace before the doc comment start is
 	 * swallowed, leading to an unaligned comment.
 	 */
-	if (fptr->type == ZEND_USER_FUNCTION && fptr->op_array.doc_comment) {
-		string_printf(str, "%s%s\n", indent, ZSTR_VAL(fptr->op_array.doc_comment));
+	if (fptr->type == ZEND_USER_FUNCTION && fptr->op_array.info->doc_comment) {
+		string_printf(str, "%s%s\n", indent, ZSTR_VAL(fptr->op_array.info->doc_comment));
 	}
 
 	string_write(str, indent, strlen(indent));
@@ -878,9 +878,9 @@ static void _function_string(string *str, zend_function *fptr, zend_class_entry 
 	/* The information where a function is declared is only available for user classes */
 	if (fptr->type == ZEND_USER_FUNCTION) {
 		string_printf(str, "%s  @@ %s %d - %d\n", indent,
-						ZSTR_VAL(fptr->op_array.filename),
-						fptr->op_array.line_start,
-						fptr->op_array.line_end);
+						ZSTR_VAL(fptr->op_array.info->filename),
+						fptr->op_array.info->line_start,
+						fptr->op_array.info->line_end);
 	}
 	string_init(&param_indent);
 	string_printf(&param_indent, "%s  ", indent);
@@ -1826,7 +1826,7 @@ ZEND_METHOD(reflection_function, getFileName)
 	}
 	GET_REFLECTION_OBJECT_PTR(fptr);
 	if (fptr->type == ZEND_USER_FUNCTION) {
-		RETURN_STR_COPY(fptr->op_array.filename);
+		RETURN_STR_COPY(fptr->op_array.info->filename);
 	}
 	RETURN_FALSE;
 }
@@ -1844,7 +1844,7 @@ ZEND_METHOD(reflection_function, getStartLine)
 	}
 	GET_REFLECTION_OBJECT_PTR(fptr);
 	if (fptr->type == ZEND_USER_FUNCTION) {
-		RETURN_LONG(fptr->op_array.line_start);
+		RETURN_LONG(fptr->op_array.info->line_start);
 	}
 	RETURN_FALSE;
 }
@@ -1862,7 +1862,7 @@ ZEND_METHOD(reflection_function, getEndLine)
 	}
 	GET_REFLECTION_OBJECT_PTR(fptr);
 	if (fptr->type == ZEND_USER_FUNCTION) {
-		RETURN_LONG(fptr->op_array.line_end);
+		RETURN_LONG(fptr->op_array.info->line_end);
 	}
 	RETURN_FALSE;
 }
@@ -1879,8 +1879,8 @@ ZEND_METHOD(reflection_function, getDocComment)
 		return;
 	}
 	GET_REFLECTION_OBJECT_PTR(fptr);
-	if (fptr->type == ZEND_USER_FUNCTION && fptr->op_array.doc_comment) {
-		RETURN_STR_COPY(fptr->op_array.doc_comment);
+	if (fptr->type == ZEND_USER_FUNCTION && fptr->op_array.info->doc_comment) {
+		RETURN_STR_COPY(fptr->op_array.info->doc_comment);
 	}
 	RETURN_FALSE;
 }
@@ -2257,7 +2257,7 @@ ZEND_METHOD(reflection_generator, getExecutingFile)
 
 	REFLECTION_CHECK_VALID_GENERATOR(ex)
 
-	ZVAL_STR_COPY(return_value, ex->func->op_array.filename);
+	ZVAL_STR_COPY(return_value, ex->func->op_array.info->filename);
 }
 /* }}} */
 

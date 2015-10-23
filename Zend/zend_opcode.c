@@ -68,8 +68,13 @@ void init_op_array(zend_op_array *op_array, zend_uchar type, int initial_ops_siz
 	op_array->T = 0;
 
 	op_array->function_name = NULL;
-	op_array->filename = zend_get_compiled_filename();
-	op_array->doc_comment = NULL;
+
+	op_array->info = (zend_op_array_info *) emalloc(sizeof(zend_op_array_info));
+
+	op_array->info->filename = zend_get_compiled_filename();
+	op_array->info->doc_comment = NULL;
+	op_array->info->line_start = 0;
+	op_array->info->line_end = 0;
 
 	op_array->arg_info = NULL;
 	op_array->num_args = 0;
@@ -384,8 +389,8 @@ ZEND_API void destroy_op_array(zend_op_array *op_array)
 	if (op_array->function_name) {
 		zend_string_release(op_array->function_name);
 	}
-	if (op_array->doc_comment) {
-		zend_string_release(op_array->doc_comment);
+	if (op_array->info->doc_comment) {
+		zend_string_release(op_array->info->doc_comment);
 	}
 	if (op_array->brk_cont_array) {
 		efree(op_array->brk_cont_array);
@@ -397,6 +402,9 @@ ZEND_API void destroy_op_array(zend_op_array *op_array)
 		if (op_array->fn_flags & ZEND_ACC_DONE_PASS_TWO) {
 			zend_llist_apply_with_argument(&zend_extensions, (llist_apply_with_arg_func_t) zend_extension_op_array_dtor_handler, op_array);
 		}
+	}
+	if (op_array->info) {
+		efree(op_array->info);
 	}
 	if (op_array->arg_info) {
 		int32_t num_args = op_array->num_args;

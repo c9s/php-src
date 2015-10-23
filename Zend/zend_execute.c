@@ -646,7 +646,7 @@ static ZEND_COLD void zend_verify_arg_error(const zend_function *zf, uint32_t ar
 		if (ptr && ptr->func && ZEND_USER_CODE(ptr->func->common.type)) {
 			zend_type_error("Argument %d passed to %s%s%s() must %s%s, %s%s given, called in %s on line %d",
 					arg_num, fclass, fsep, fname, need_msg, need_kind, given_msg, given_kind,
-					ZSTR_VAL(ptr->func->op_array.filename), ptr->opline->lineno);
+					ZSTR_VAL(ptr->func->op_array.info->filename), ptr->opline->lineno);
 		} else {
 			zend_type_error("Argument %d passed to %s%s%s() must %s%s, %s%s given", arg_num, fclass, fsep, fname, need_msg, need_kind, given_msg, given_kind);
 		}
@@ -903,7 +903,7 @@ static ZEND_COLD void zend_verify_missing_arg(zend_execute_data *execute_data, u
 		zend_execute_data *ptr = EX(prev_execute_data);
 
 		if (ptr && ptr->func && ZEND_USER_CODE(ptr->func->common.type)) {
-			zend_error(E_WARNING, "Missing argument %u for %s%s%s(), called in %s on line %d and defined", arg_num, class_name, space, func_name, ZSTR_VAL(ptr->func->op_array.filename), ptr->opline->lineno);
+			zend_error(E_WARNING, "Missing argument %u for %s%s%s(), called in %s on line %d and defined", arg_num, class_name, space, func_name, ZSTR_VAL(ptr->func->op_array.info->filename), ptr->opline->lineno);
 		} else {
 			zend_error(E_WARNING, "Missing argument %u for %s%s%s()", arg_num, class_name, space, func_name);
 		}

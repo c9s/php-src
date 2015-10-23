@@ -475,7 +475,7 @@ ZEND_API const char *zend_get_executed_filename(void) /* {{{ */
 		ex = ex->prev_execute_data;
 	}
 	if (ex) {
-		return ZSTR_VAL(ex->func->op_array.filename);
+		return ZSTR_VAL(ex->func->op_array.info->filename);
 	} else {
 		return "[no active file]";
 	}
@@ -490,7 +490,7 @@ ZEND_API zend_string *zend_get_executed_filename_ex(void) /* {{{ */
 		ex = ex->prev_execute_data;
 	}
 	if (ex) {
-		return ex->func->op_array.filename;
+		return ex->func->op_array.info->filename;
 	} else {
 		return NULL;
 	}

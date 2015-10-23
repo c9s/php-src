@@ -186,7 +186,7 @@ void phpdbg_print_opline_ex(zend_execute_data *execute_data, zend_bool ignore_fl
 			   opline->lineno,
 			   opline,
 			   decode,
-			   execute_data->func->op_array.filename ? ZSTR_VAL(execute_data->func->op_array.filename) : "unknown");
+			   execute_data->func->op_array.info->filename ? ZSTR_VAL(execute_data->func->op_array.info->filename) : "unknown");
 		}
 
 		if (!ignore_flags && PHPDBG_G(oplog)) {
@@ -194,7 +194,7 @@ void phpdbg_print_opline_ex(zend_execute_data *execute_data, zend_bool ignore_fl
 				opline->lineno,
 				opline,
 				decode,
-				execute_data->func->op_array.filename ? ZSTR_VAL(execute_data->func->op_array.filename) : "unknown");
+				execute_data->func->op_array.info->filename ? ZSTR_VAL(execute_data->func->op_array.info->filename) : "unknown");
 		}
 
 		efree(decode);
@@ -205,7 +205,7 @@ void phpdbg_print_opline_ex(zend_execute_data *execute_data, zend_bool ignore_fl
 		zend_op_array *op_array = &execute_data->func->op_array;
 		cur->op = (zend_op *) execute_data->opline;
 		cur->opcodes = op_array->opcodes;
-		cur->filename = op_array->filename;
+		cur->filename = op_array->info->filename;
 		cur->scope = op_array->scope;
 		cur->function_name = op_array->function_name;
 		cur->next = NULL;

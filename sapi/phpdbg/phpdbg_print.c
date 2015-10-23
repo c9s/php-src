@@ -63,19 +63,19 @@ static inline void phpdbg_print_function_helper(zend_function *method) /* {{{ */
 
 				if (method->common.scope) {
 					phpdbg_writeln("printoplineinfo", "type=\"User\" startline=\"%d\" endline=\"%d\" method=\"%s::%s\" file=\"%s\" opline=\"%p\"", "L%d-%d %s::%s() %s - %p + %d ops",
-						op_array->line_start,
-						op_array->line_end,
+						op_array->info->line_start,
+						op_array->info->line_end,
 						ZSTR_VAL(method->common.scope->name),
 						ZSTR_VAL(method->common.function_name),
-						op_array->filename ? ZSTR_VAL(op_array->filename) : "unknown",
+						op_array->info && op_array->info->filename ? ZSTR_VAL(op_array->info->filename) : "unknown",
 						opline,
 						op_array->last);
 				} else {
 					phpdbg_writeln("printoplineinfo", "type=\"User\" startline=\"%d\" endline=\"%d\" function=\"%s\" file=\"%s\" opline=\"%p\"", "L%d-%d %s() %s - %p + %d ops",
-						op_array->line_start,
-						op_array->line_end,
+						op_array->info->line_start,
+						op_array->info->line_end,
 						method->common.function_name ? ZSTR_VAL(method->common.function_name) : "{main}",
-						op_array->filename ? ZSTR_VAL(op_array->filename) : "unknown",
+						op_array->info && op_array->info->filename ? ZSTR_VAL(op_array->info->filename) : "unknown",
 						opline,
 						op_array->last);
 				}
@@ -132,8 +132,8 @@ PHPDBG_PRINT(stack) /* {{{ */
 				phpdbg_notice("printinfo", "function=\"%s\" num=\"%d\"", "Stack in %s() (%d ops)", ZSTR_VAL(ops->function_name), ops->last);
 			}
 		} else {
-			if (ops->filename) {
-				phpdbg_notice("printinfo", "file=\"%s\" num=\"%d\"", "Stack in %s (%d ops)", ZSTR_VAL(ops->filename), ops->last);
+			if (ops->info && ops->info->filename) {
+				phpdbg_notice("printinfo", "file=\"%s\" num=\"%d\"", "Stack in %s (%d ops)", ZSTR_VAL(ops->info->filename), ops->last);
 			} else {
 				phpdbg_notice("printinfo", "opline=\"%p\" num=\"%d\"", "Stack @ %p (%d ops)", ops, ops->last);
 			}

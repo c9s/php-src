@@ -2344,12 +2344,12 @@ ZEND_FUNCTION(debug_print_backtrace)
 		}
 
 		if (skip->func && ZEND_USER_CODE(skip->func->common.type)) {
-			filename = ZSTR_VAL(skip->func->op_array.filename);
+			filename = ZSTR_VAL(skip->func->op_array.info->filename);
 			if (skip->opline->opcode == ZEND_HANDLE_EXCEPTION) {
 				if (EG(opline_before_exception)) {
 					lineno = EG(opline_before_exception)->lineno;
 				} else {
-					lineno = skip->func->op_array.line_end;
+					lineno = skip->func->op_array.info->line_end;
 				}
 			} else {
 				lineno = skip->opline->lineno;
@@ -2460,7 +2460,7 @@ ZEND_FUNCTION(debug_print_backtrace)
 					break;
 				}
 				if (prev->func && ZEND_USER_CODE(prev->func->common.type)) {
-					zend_printf(") called at [%s:%d]\n", ZSTR_VAL(prev->func->op_array.filename), prev->opline->lineno);
+					zend_printf(") called at [%s:%d]\n", ZSTR_VAL(prev->func->op_array.info->filename), prev->opline->lineno);
 					break;
 				}
 				prev_call = prev;
@@ -2538,12 +2538,12 @@ ZEND_API void zend_fetch_debug_backtrace(zval *return_value, int skip_last, int 
 		}
 
 		if (skip->func && ZEND_USER_CODE(skip->func->common.type)) {
-			filename = skip->func->op_array.filename;
+			filename = skip->func->op_array.info->filename;
 			if (skip->opline->opcode == ZEND_HANDLE_EXCEPTION) {
 				if (EG(opline_before_exception)) {
 					lineno = EG(opline_before_exception)->lineno;
 				} else {
-					lineno = skip->func->op_array.line_end;
+					lineno = skip->func->op_array.info->line_end;
 				}
 			} else {
 				lineno = skip->opline->lineno;
@@ -2566,7 +2566,7 @@ ZEND_API void zend_fetch_debug_backtrace(zval *return_value, int skip_last, int 
 					break;
 				}
 				if (prev->func && ZEND_USER_CODE(prev->func->common.type)) {
-					add_assoc_str_ex(&stack_frame, "file", sizeof("file")-1, zend_string_copy(prev->func->op_array.filename));
+					add_assoc_str_ex(&stack_frame, "file", sizeof("file")-1, zend_string_copy(prev->func->op_array.info->filename));
 					add_assoc_long_ex(&stack_frame, "line", sizeof("line")-1, prev->opline->lineno);
 					break;
 				}
