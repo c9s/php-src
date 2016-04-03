@@ -427,8 +427,7 @@ typedef struct _zend_internal_function {
 #define ZEND_FN_SCOPE_NAME(function)  ((function) && (function)->common.scope ? ZSTR_VAL((function)->common.scope->name) : "")
 
 union _zend_function {
-    /* a type could be ZEND_USER_FUNCTION, ZEND_INTERNAL_FUNCTION, ZEND_OVERLOADED_FUNCTION_TEMPORARY */
-	zend_uchar type;	/* MUST be the first element of this struct! */
+        zend_uchar type;	/* MUST be the first element of this struct! */
 
 	struct {
 		zend_uchar type;  /* never used */
