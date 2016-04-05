@@ -197,9 +197,6 @@ typedef struct _zend_oparray_context {
 	HashTable *labels;
 } zend_oparray_context;
 
-#define ZEND_ACCESSOR_GETTER 0x01
-#define ZEND_ACCESSOR_SETTER 0x02
-#define ZEND_ACCESSOR_CONST  0x04
 
 /* method flags (types) */
 #define ZEND_ACC_STATIC			0x01
@@ -220,6 +217,20 @@ typedef struct _zend_oparray_context {
 /* method flags (visibility) */
 /* The order of those must be kept - public < protected < private */
 #define ZEND_ACC_PUBLIC		0x100
+
+
+/* accessors are public */
+/* function is a getter of a property */
+#define ZEND_ACC_ACCESSOR_GETTER        0x101
+
+/* function is a setter of a property */
+#define ZEND_ACC_ACCESSOR_SETTER        0x102
+
+/* function returns a constant */
+#define ZEND_ACC_ACCESSOR_CONST         0x104
+
+
+
 #define ZEND_ACC_PROTECTED	0x200
 #define ZEND_ACC_PRIVATE	0x400
 #define ZEND_ACC_PPP_MASK  (ZEND_ACC_PUBLIC | ZEND_ACC_PROTECTED | ZEND_ACC_PRIVATE)
@@ -277,8 +288,12 @@ typedef struct _zend_oparray_context {
 /* class has magic methods __get/__set/__unset/__isset that use guards */
 #define ZEND_ACC_USE_GUARDS				0x1000000
 
+
+
 /* function has typed arguments */
 #define ZEND_ACC_HAS_TYPE_HINTS			0x10000000
+
+
 
 /* op_array has finally blocks */
 #define ZEND_ACC_HAS_FINALLY_BLOCK		0x20000000
@@ -291,6 +306,9 @@ typedef struct _zend_oparray_context {
 
 /* op_array uses strict mode types */
 #define ZEND_ACC_STRICT_TYPES			0x80000000
+
+
+
 
 char *zend_visibility_string(uint32_t fn_flags);
 
@@ -365,7 +383,6 @@ struct _zend_op_array {
 	zend_arg_info *arg_info;
 	/* END of common elements */
 
-	zend_uchar accessor_type; // the accessor type (getter, setter, const returniing)
 	uint32_t property_offset;
 
 	uint32_t *refcount;

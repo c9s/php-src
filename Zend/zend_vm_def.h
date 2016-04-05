@@ -3160,9 +3160,9 @@ ZEND_VM_HANDLER(112, ZEND_INIT_METHOD_CALL, CONST|TMPVAR|UNUSED|THIS|CV, CONST|T
 	}
 
 	if (OP1_TYPE == IS_CV && OP2_TYPE == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;

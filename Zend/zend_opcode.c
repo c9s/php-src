@@ -96,7 +96,6 @@ void init_op_array(zend_op_array *op_array, zend_uchar type, int initial_ops_siz
 
 	op_array->run_time_cache = NULL;
 	op_array->cache_size = 0;
-	op_array->accessor_type = 0;
 	op_array->property_offset = 0;
 
 	memset(op_array->reserved, 0, ZEND_MAX_RESERVED_RESOURCES * sizeof(void*));
@@ -662,7 +661,7 @@ ZEND_API int pass_two(zend_op_array *op_array)
 			&& returnop->opcode == ZEND_RETURN
 			&& returnop->op1_type == IS_VAR
 		) {
-			op_array->accessor_type = ZEND_ACCESSOR_GETTER;
+			op_array->type |= ZEND_ACC_ACCESSOR_GETTER;
 		}
 	}
 
