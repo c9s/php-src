@@ -544,7 +544,7 @@ zval *zend_std_read_property(zval *object, zval *member, int type, void **cache_
 			if (EXPECTED(Z_TYPE_P(retval) != IS_UNDEF)) {
 				if (EXPECTED(EG(current_execute_data) != NULL)
 					&& EXPECTED(EG(current_execute_data)->func != NULL)
-					&& EXPECTED(EG(current_execute_data)->func->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
+					&& EXPECTED(EG(current_execute_data)->func->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
 				) {
 					EG(current_execute_data)->func->op_array.property_offset = property_offset;
 				}

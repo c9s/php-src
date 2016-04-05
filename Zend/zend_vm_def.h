@@ -3161,7 +3161,7 @@ ZEND_VM_HANDLER(112, ZEND_INIT_METHOD_CALL, CONST|TMPVAR|UNUSED|THIS|CV, CONST|T
 
 	if (OP1_TYPE == IS_CV && OP2_TYPE == IS_CONST
 			&& (fbc->type == ZEND_USER_FUNCTION)
-			&& (fbc->op_array.type & ZEND_ACCESSOR_GETTER)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
 			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;

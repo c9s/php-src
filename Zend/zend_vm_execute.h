@@ -6049,9 +6049,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_CONST_CO
 	}
 
 	if (IS_CONST == IS_CV && IS_CONST == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -9937,9 +9937,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_CONST_CV
 	}
 
 	if (IS_CONST == IS_CV && IS_CV == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -11905,9 +11905,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_CONST_TM
 	}
 
 	if (IS_CONST == IS_CV && (IS_TMP_VAR|IS_VAR) == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -28845,9 +28845,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_UNUSED_C
 	}
 
 	if (IS_UNUSED == IS_CV && IS_CONST == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -32227,9 +32227,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_UNUSED_C
 	}
 
 	if (IS_UNUSED == IS_CV && IS_CV == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -34543,9 +34543,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_UNUSED_T
 	}
 
 	if (IS_UNUSED == IS_CV && (IS_TMP_VAR|IS_VAR) == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -40005,9 +40005,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_CV_CONST
 	}
 
 	if (IS_CV == IS_CV && IS_CONST == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -46543,9 +46543,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_CV_CV_HA
 	}
 
 	if (IS_CV == IS_CV && IS_CV == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -50133,9 +50133,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_CV_TMPVA
 	}
 
 	if (IS_CV == IS_CV && (IS_TMP_VAR|IS_VAR) == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -52409,9 +52409,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_TMPVAR_C
 	}
 
 	if ((IS_TMP_VAR|IS_VAR) == IS_CV && IS_CONST == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -54799,9 +54799,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_TMPVAR_C
 	}
 
 	if ((IS_TMP_VAR|IS_VAR) == IS_CV && IS_CV == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
@@ -56093,9 +56093,9 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_INIT_METHOD_CALL_SPEC_TMPVAR_T
 	}
 
 	if ((IS_TMP_VAR|IS_VAR) == IS_CV && (IS_TMP_VAR|IS_VAR) == IS_CONST
-			&& EXPECTED(fbc->type == ZEND_USER_FUNCTION)
-			&& UNEXPECTED(fbc->op_array.accessor_type == ZEND_ACCESSOR_GETTER)
-			&& EXPECTED(fbc->op_array.property_offset != 0)
+			&& (fbc->type == ZEND_USER_FUNCTION)
+			&& (fbc->op_array.type & ZEND_ACC_ACCESSOR_GETTER)
+			&& (fbc->op_array.property_offset != 0)
 	) {
 		zval *retval = NULL;
 		zend_op *nextop = NULL;
